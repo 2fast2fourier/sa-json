@@ -1,0 +1,291 @@
+<!doctype html>
+<meta charset="utf-8">
+
+
+
+
+
+
+
+<h1>JSON Output from the Something Awful Forums</h1>
+
+Some pages on SA will render JSON if you append <code>&amp;json=1</code> to the URL. Ideally all of the pages we scrape in our apps would support JSON output.
+
+This document describes JSON output that is already available, as well as JSON output we would like to have available.
+
+<section>
+  <h1>bookmarkthreads.php</h1>
+  <dl>
+    <dt> GET bookmarkthreads.php?perage=:perpage&amp;sortorder=[desc|asc]&amp;pagenumber=:pagenumber
+    <dd>  <p>List bookmarked threads. <code>perage</code> is not a typo.</p>
+      <p>This is not yet available as JSON.</p>
+      <section>
+        <h1>Example</h1>
+        <code><pre>
+{
+  "icons": {
+    "104": {
+      "iconid": "104", 
+      "iconpath": "http://fi.somethingawful.com/forums/posticons/icons-08/event.png", 
+      "title": "Event planned"
+    },
+  },
+  "page": 1,
+  threads: [
+    {
+      "bookmark_category": null, 
+      "iconid": "104", 
+      "lastpost": 1357338393, 
+      "lastposter": "Jonny Retro", 
+      "newpostcount": 406, 
+      "open": 1, 
+      "postuserid": 29015, 
+      "postusername": "Zeta Taskforce", 
+      "replycount": 605, 
+      "seen_posts": 200, 
+      "sticky": true, 
+      "threadid": 3521233, 
+      "title": "2012 Holiday Charity! We adopt a village in Haiti again ($48K+ raised already!!)", 
+      "views": 52582, 
+      "vote_count": 0, 
+      "vote_score_average": 0, 
+      "vote_score_sum": null
+    }, 
+    ...
+  ]
+}       </pre></code>
+      </section>
+  </dl>
+</section>
+
+<section>
+  <h1>editpost.php</h1>
+  <dl>
+    <dt> GET editpost.php?action=editpost&amp;postid=:id&amp;json=1
+    <dd> <p>Retrieve post info and bbcode for editing. Works only if you're allowed to edit the post.</p>
+      <p>This is not yet available as JSON.</p>
+      <section>
+        <h1>Example</h1>
+        <code><pre>
+{
+  "date": 1353217320,
+  "postid": 409687826,
+  "userid": 106125,
+  "username": "pokeyman",
+  "text": "[quote="Aatrek" post="409687518"]\nAnother vote to bring back the Refresh button, please!\n[/quote]\n\nFor the last page in a thread or because of image display fuckups?"
+}
+        </pre></code>
+      </section>
+  </dl>
+</section>
+
+<section>
+  <h1>forumdisplay.php</h1>
+  <dl>
+    <dt> GET forumdisplay.php?forumid=:id&amp;perpage=:perpage&amp;pagenumber=:pagenumber&amp;json=1
+    <dd> <p>List threads in a forum.
+      <p>This is not yet available as JSON.</p>
+      <section>
+        <h1>Example</h1>
+        <code><pre>
+{
+  "announcements": [
+    {
+      "forumid": 1,
+    },
+    ...
+  ],
+  "icons": {
+    "104": {
+      "iconid": "104", 
+      "iconpath": "http://fi.somethingawful.com/forums/posticons/icons-08/event.png", 
+      "title": "Event planned"
+    },
+    ...
+  }, 
+  "moderators": [
+    32076,
+    43050,
+    45450,
+    53142,
+    102356
+  ],
+  page: 1,
+  "threads": [
+    {
+      "bookmark_category": null, 
+      "iconid": "309", 
+      "lastpost": 1357345023, 
+      "lastposter": "Doodles", 
+      "open": 1, 
+      "othericonid": null, 
+      "postuserid": 20262, 
+      "postusername": "Doodles", 
+      "replycount": 103, 
+      "seen_posts": null, 
+      "sticky": false, 
+      "threadid": 3526257, 
+      "title": "KDOC New Year's Eve Broadcast: &quot;Don't fucking give me shit!&quot;", 
+      "views": 8034, 
+      "vote_count": 0, 
+      "vote_score_average": 0, 
+      "vote_score_sum": null
+    }, 
+    ...
+  ]
+}       </pre></code>
+      </section>
+  </dl>
+</section>
+
+<section>
+  <h1>member.php</h1>
+  <dl>
+    <dt> GET member.php?action=getinfo&amp;userid=:id&amp;json=1
+    <dd> <p>Show user profile.</p>
+      <p>This is not yet available as JSON.</p>
+      <section>
+        <h1>Example</h1>
+        <code><pre>
+{
+  "about_me": null,
+  "aim": null,
+  "gender": "porpoise",
+  "icq": null,
+  "joindate": 2147385600,
+  "homepage": null,
+  "interests": null,
+  "location": null,
+  "occupation": null,
+  "postcount": 374,
+  "posts_per_day": 374,
+  "userid": 186591,
+  "username": "Choochacacko",
+  "usertitle": "&lt;img src=\"http://i.somethingawful.com/images/choochacacko.gif\" alt=\"\" class=\"img\" border=\"0\"&gt;",
+  "yahoo": null
+}       </pre></code>
+      </section>
+    
+    <dt> GET member.php?action=editprofile&amp;json=1
+    <dd> <p>Show logged-in user's profile.</p>
+      <p>This is not yet available as JSON.
+      <section>
+        <h1>Example</h1>
+        <code><pre>
+{
+  "has_plat": true,
+  "userid": 106125,
+  "username": "pokeyman",
+}       </pre></code>
+      </sectoin>
+  </dl>
+</section>
+
+<section>
+  <h1>newreply.php</h1>
+  <dl>
+    <dt> POST newreply.php?json=1
+    <dd> <p>Render bbcode as HTML, for a preview.</p>
+      <section>
+        <h1>Example</h1>
+        <code><pre>Input: [b]asdf[/b]</pre></code>
+        <code><pre>Output: {"preview":"&lt;b&gt;asdf&lt;\/b&gt;"}</pre></code>
+      </section>
+    
+    <dt> GET newreply.php?action=newreply&amp;threadid=:id&amp;json=1
+    <dd> <p>Prepare a reply to a thread.</p>
+      <section>
+        <h1>Example</h1>
+        <code><pre>
+{
+  "bookmark": true,
+  "form_cookie": "1234567890",
+  "formkey": "abcdefghijklmnopqrstuvwxyz",
+  "parseurl": true
+}
+        </pre></code>
+      </section>
+    
+    <dt> GET newreply.php?action=newreply&amp;postid=:id&amp;json=1
+    <dd> <p>Get a post as a quote. Only works if you can post in the thread.</p>
+      <section>
+        <h1>Example</h1>
+        <code><pre>
+{
+  "body": "[quote=\"how!!\" post=\"411147719\"]\nThat seems like an argument in favor of documentation.\r\n\r\nDocumentation should go in the code, not in the commit history.\n[/quote]\n\n", 
+  "postid": 411147719, 
+  "userid": 182061, 
+  "username": "how!!"
+}       </pre></code>
+      </section>
+  </dl>
+</section>
+
+<section>
+  <h1>showthread.php</h1>
+  <dl>
+    <dt> GET showthread.php?threadid=:id&amp;perpage=:perpage&amp;pagenumber=:pagenumber&amp;json=1
+    <dt> GET showthread.php?threadid=:id&amp;perpage=:perpage&amp;goto=[newpost|lastpost]&amp;json=1
+    <dd> <p>List posts in a thread.</p>
+      <p>This is not yet available as JSON.</p>
+      <section>
+        <h1>Example</h1>
+        <code><pre>
+{
+  "forumid": 192,
+  "goon_banner": null, 
+  "page": 2, 
+  "pagecount": 35, 
+  "posts": [
+    {
+      "attachmentid": null, 
+      "date": 1349476373, 
+      "editdate": null, 
+      "edituserid": null, 
+      "message": "That would be a great feature.  My eyesight isn't getting any better...", 
+      "post_index": 41, 
+      "postid": 408234935,
+      "seen": false,  
+      "userid": 123566
+    }, 
+    ...
+  ], 
+  "seen_posts": 1363, 
+  "threadid": 3510131, 
+  "users": {
+    "14566": {
+      "admin": false,
+      "banned": false, 
+      "joindate": 972619200, 
+      "mod": false,
+      "probation_time": 1283085511, 
+      "upgrade_classes": "", 
+      "upgrades": null, 
+      "userid": 14566, 
+      "username": "TACD", 
+      "usertitle": "&lt;img alt=\"\" border=\"0\" src=\"http://i.somethingawful.com/forumsystem/customtitles/title-tacd-2.gif\" /&gt;&lt;br /&gt;&lt;font color=\"red\" size=\"3\"&gt;&lt;b&gt;Proud leader of the &#34;0.999... = 1&#34; Army&lt;/b&gt;&lt;/font&gt;"
+    }, 
+    ...
+  }
+}       </pre></code>
+      </section>
+  </dl>
+</section>
+
+
+
+
+
+
+
+
+<style>
+body { font-family: Georgia, serif }
+h1, h2 { font-family: sans-serif }
+h1 { font-weight: normal; font-size: 2em }
+section section h1 { font-style: italic; font-size: 1em }
+dt, dd { margin-left: 1em }
+dt { font-family: monospace; background-color: #efefef }
+dd { margin-top: 1em }
+pre { white-space: pre-wrap }
+</style>
